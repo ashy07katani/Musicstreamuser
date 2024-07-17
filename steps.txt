@@ -5,3 +5,10 @@ go get github.com/joho/godotenv
 for parsing the env variable into our struct we will use :
 
 "github.com/caarlos0/env/v11"
+
+
+https://chatgpt.com/share/5a71925f-5cae-49fc-b08d-b03359085489
+
+
+install the postgresql driver.
+go get github.com/lib/pq
