@@ -1,0 +1,7 @@
+In order to load the env file we will use this package
+
+go get github.com/joho/godotenv
+
+for parsing the env variable into our struct we will use :
+
+"github.com/caarlos0/env/v11"
