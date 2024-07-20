@@ -5,9 +5,14 @@ import (
 	"Musicstreamuser/controller"
 	"Musicstreamuser/repository"
 	"Musicstreamuser/service"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -31,8 +36,23 @@ func main() {
 	userController := controller.NewController(userService)
 	router := mux.NewRouter()
 	userController.RegisterRoutes(router)
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%v", localConfig.Port),
+		Handler: router,
+	}
 	log.Println("Server is about to start")
-	http.ListenAndServe(fmt.Sprintf(":%v", localConfig.Port), router)
+	go func() {
+		if err = server.ListenAndServe(); err != nil {
+			log.Fatalf("Error in starting the server: %v", err)
+		}
+	}()
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
+	sig := <-sigChan
+	log.Fatalf("Gracefully Shutting down due to the signal received: %v", sig)
+	shutDownCtx, cancel := context.WithDeadline(context.Background(), time.Now().Add(30*time.Second))
+	err = server.Shutdown(shutDownCtx)
+	defer cancel()
 	defer db.Close()
 
 }
