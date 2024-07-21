@@ -1,7 +1,6 @@
-package main
+package config
 
 import (
-	"Musicstreamuser/config"
 	"database/sql"
 	"fmt"
 	"log"
@@ -9,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func DBinit(localConfig *config.LocalConfig) (*sql.DB, error) {
+func DBinit(localConfig *LocalConfig) (*sql.DB, error) {
 
 	connStr := fmt.Sprintf("postgresql://%v:%v@%v:%v/%v?sslmode=disable", localConfig.DBUser, localConfig.DBPassword, localConfig.Host, localConfig.DBPort, localConfig.DBName)
 	db, err := sql.Open("postgres", connStr)

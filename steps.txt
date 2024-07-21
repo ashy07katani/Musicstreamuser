@@ -12,3 +12,5 @@ https://chatgpt.com/share/5a71925f-5cae-49fc-b08d-b03359085489
 
 install the postgresql driver.
 go get github.com/lib/pq
+
+psql -U your_username -d your_database

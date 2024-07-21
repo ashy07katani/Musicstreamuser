@@ -18,6 +18,7 @@ func NewController(userService *service.UserService) *UserController {
 func (user *UserController) RegisterRoutes(router *mux.Router) {
 	subRouter := router.PathPrefix("/api/user").Subrouter()
 	subRouter.HandleFunc("/register", user.registrationHandler).Methods(http.MethodPost)
+	subRouter.HandleFunc("/login", user.loginHandler).Methods(http.MethodGet)
 }
 
 //	func (user *UserController) registrationHandler(rw http.ResponseWriter, r *http.Request) {
@@ -31,4 +32,8 @@ func (user *UserController) registrationHandler(rw http.ResponseWriter, r *http.
 		http.Error(rw, "Cannot create new user", http.StatusInternalServerError)
 	}
 
+}
+
+func (user *UserController) loginHandler(rw http.ResponseWriter, r *http.Request) {
+	user.userService.LoginUser(r, rw)
 }

@@ -14,6 +14,7 @@ type LocalConfig struct {
 	DBPassword string `env:"DB_PASSWORD"`
 	DBName     string `env:"DB_NAME"`
 	Port       int    `env:"PORT"`
+	JwtSecret  string `env:"JWT_SECRET"`
 }
 
 func GetConfig() (*LocalConfig, error) {
