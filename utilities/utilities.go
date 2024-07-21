@@ -61,13 +61,3 @@ func GenerateJWT(jwtSecret string, email string, rw http.ResponseWriter) {
 
 	json.NewEncoder(rw).Encode(response)
 }
-
-// "status":  "success",
-//         "message": "Token generated successfully",
-//         "data": map[string]interface{}{
-//             "token": token,
-//             "user": map[string]interface{}{
-//                 "username": username,
-//                 "user_id":  userID,
-//                 "roles":    roles,
-//             },
