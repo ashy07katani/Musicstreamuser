@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"Musicstreamuser/dto"
 	models "Musicstreamuser/model"
 	"database/sql"
 	"log"
@@ -20,4 +21,11 @@ func (userRepository *UserRepository) CreateUser(user *models.User) error {
 		log.Fatalf("Error executing createuser query: %v", err)
 	}
 	return err
+}
+
+func (userRepository *UserRepository) GetUserByEmail(email string) (*dto.LoginResponse, error) {
+	row := userRepository.db.QueryRow(GetUserByEmail, email)
+	loginResponse := &dto.LoginResponse{}
+	err := row.Scan(&loginResponse.Username, &loginResponse.Email, &loginResponse.Password, &loginResponse.FirstName, &loginResponse.LastName)
+	return loginResponse, err
 }

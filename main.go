@@ -23,7 +23,7 @@ func main() {
 		log.Fatalf("Error initializing database configurations %v", err)
 		return
 	}
-	db, err := DBinit(localConfig)
+	db, err := config.DBinit(localConfig)
 	if err != nil {
 		log.Fatalf("Error initializing connection with Database %v", err)
 	}
@@ -32,7 +32,7 @@ func main() {
 	}
 	log.Printf("%+v", db)
 	repository := repository.NewRepository(db)
-	userService := service.NewService(repository)
+	userService := service.NewService(repository, localConfig.JwtSecret)
 	userController := controller.NewController(userService)
 	router := mux.NewRouter()
 	userController.RegisterRoutes(router)
